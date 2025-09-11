@@ -8,7 +8,6 @@ public class TankControl : MonoBehaviour
     private Vector2 moveInput;
     private InputSystem_Actions controls;
     private Tank tank;
-
     [Header("Input Config")]
     public InputConfig inputConfig;
     private int PlayerID ;
@@ -35,6 +34,7 @@ public class TankControl : MonoBehaviour
     private Bullet bullets;
     private ShotGun shotGun;
     private MiniGun miniGun;
+    private LaserAim laserAim;
 
     
     // private AudioSource audioSource;
@@ -51,6 +51,7 @@ public class TankControl : MonoBehaviour
         bullets = bulletPrefab.GetComponent<Bullet>();
         shotGun = shotGunPrefab.GetComponent<ShotGun>();
         miniGun = miniGunPrefab.GetComponent<MiniGun>();
+        laserAim = GetComponent<LaserAim>();
     }
     private void Start()
     {
@@ -96,8 +97,10 @@ public class TankControl : MonoBehaviour
                 break; 
             case 2:
                 OnMiniGun();
-                break; 
-                
+                break;
+            case 3:
+                OnLaserGun();
+                break;
         }
 
     }
@@ -224,7 +227,10 @@ public class TankControl : MonoBehaviour
         AudioManager.Play2DOneShot(miniFire.clip,miniFire.volume);
         nextFireTime = Time.time + miniGun.fireRate;
     }
-
+    private void OnLaserGun(){
+        laserAim.setFirePoint(firePoint);
+        laserAim.setIsAiming(true);
+    }
     private Vector2 RotateVector(Vector2 vector, float angle)
     {
         float radians = angle * Mathf.Deg2Rad;
