@@ -9,6 +9,10 @@ public class LaserAim : MonoBehaviour
     private LineRenderer instanceLine;
     private bool isAiming = false;
     private Transform firePoint;
+    private Color c;
+    const float maxDist = 100f;
+    const float epsilon = 0.01f;
+    private List<Vector3> pts;
     private void Awake(){
         instanceLine = Instantiate(aimLine,transform);
         instanceLine.enabled = false;
@@ -19,6 +23,9 @@ public class LaserAim : MonoBehaviour
         instanceLine.enabled = isAiming;
     }
     public void setFirePoint(Transform firePoint){
+        c = GetComponent<Tank>().GetColor();
+        instanceLine.startColor = c;
+        instanceLine.endColor = c;
         this.firePoint = firePoint;
     }
     private void Update(){
@@ -31,14 +38,12 @@ public class LaserAim : MonoBehaviour
     {
         if (instanceLine == null || firePoint == null) return;
 
-        const float maxDist = 100f;
-        const float epsilon = 0.01f;
-        const float minSeg = 0.001f;
+        // const float minSeg = 0.001f;
 
         Vector2 origin = firePoint.position;
         Vector2 dir = ((Vector2)transform.right).normalized;
 
-        List<Vector3> pts = new List<Vector3> { origin };
+        pts = new List<Vector3> { origin };
 
         for (int i = 0; i < maxReflections; i++)
         {
@@ -49,11 +54,11 @@ public class LaserAim : MonoBehaviour
                 break;
             }
 
-            if (hit.distance < minSeg)
-            {
-                origin += dir * epsilon; // đẩy nhẹ rồi thử lại
-                continue;
-            }
+            // if (hit.distance < minSeg)
+            // {
+            //     origin += dir * epsilon; // đẩy nhẹ rồi thử lại
+            //     continue;
+            // }
 
             pts.Add(hit.point);
 
@@ -63,9 +68,10 @@ public class LaserAim : MonoBehaviour
             origin = hit.point + hit.normal * epsilon;
             dir = reflect;
         }
-
-        instanceLine.useWorldSpace = true;
         instanceLine.positionCount = pts.Count;
         instanceLine.SetPositions(pts.ToArray());
+    }
+    public List<Vector3> getPts(){
+        return pts;
     }
 }

@@ -43,4 +43,13 @@ public class Tank: MonoBehaviour
             return;
         }
     }
+    public Color GetColor(){
+        switch(playerID){
+            case 1: return Color.blue;
+            case 2: return Color.red;
+            case 3: return Color.green;
+            case 4: return Color.yellow;
+        }
+        return Color.black;
+    }
 }

@@ -28,13 +28,16 @@ public class TankControl : MonoBehaviour
     public GameObject audioSource;
     public GameObject audioShotGun;
     public GameObject audioMiniGun;
+    public GameObject audioLaser;
     private AudioSource fire;
     private AudioSource shotFire;
     private AudioSource miniFire;
+    private AudioSource laserFire;
     private Bullet bullets;
     private ShotGun shotGun;
     private MiniGun miniGun;
     private LaserAim laserAim;
+    private Laser laser;
 
     
     // private AudioSource audioSource;
@@ -48,10 +51,12 @@ public class TankControl : MonoBehaviour
         if (fire == null) Debug.Log("Fire is null");
         shotFire = audioShotGun.GetComponent<AudioSource>();
         miniFire = audioMiniGun.GetComponent<AudioSource>();
+        laserFire = audioLaser.GetComponent<AudioSource>();
         bullets = bulletPrefab.GetComponent<Bullet>();
         shotGun = shotGunPrefab.GetComponent<ShotGun>();
         miniGun = miniGunPrefab.GetComponent<MiniGun>();
         laserAim = GetComponent<LaserAim>();
+        laser = GetComponent<Laser>();
     }
     private void Start()
     {
@@ -70,16 +75,16 @@ public class TankControl : MonoBehaviour
         controls.Player.Attack.performed += ctx => OnAttack() ;
         // Chỉ enable Input System cho PlayerID = 1
 
-        if (PlayerID == 1)
-        {
-            controls.Enable();
-        }
+        // if (PlayerID == 1)
+        // {
+        //     controls.Enable();
+        // }
     }
 
-    private void OnEnable() 
-    { 
-        if (controls != null && PlayerID == 1) controls.Enable(); 
-    }
+    // private void OnEnable() 
+    // { 
+    //     if (controls != null && PlayerID == 1) controls.Enable(); 
+    // }
     
     private void OnDisable() 
     { 
@@ -100,12 +105,21 @@ public class TankControl : MonoBehaviour
                 break;
             case 3:
                 OnLaserGun();
+                gunMode = 0;
+                laserAim.setIsAiming(false);
                 break;
         }
 
     }
     void Update()
     {   
+        if(gunMode == 3){
+            laserAim.setFirePoint(firePoint);
+            laserAim.setIsAiming(true);
+        }
+        if(gunMode==0 && nextFireTime < Time.time){
+            gunMode = 3;
+        }
         Vector2 finalMoveInput = Vector2.zero;
         if (is_created == true)
         {
@@ -228,8 +242,12 @@ public class TankControl : MonoBehaviour
         nextFireTime = Time.time + miniGun.fireRate;
     }
     private void OnLaserGun(){
-        laserAim.setFirePoint(firePoint);
-        laserAim.setIsAiming(true);
+
+        // laserAim.DrawLaserAim();
+        AudioManager.Play2DOneShot(laserFire.clip,laserFire.volume);
+        Debug.Log("laserAim.getPts(): " + laserAim.getPts().Count);
+        laser.setPts(laserAim.getPts());
+        nextFireTime = Time.time + laser.fireRate;
     }
     private Vector2 RotateVector(Vector2 vector, float angle)
     {

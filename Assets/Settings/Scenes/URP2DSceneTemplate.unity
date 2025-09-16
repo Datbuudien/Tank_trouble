@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 846779387}
   - component: {fileID: 846779389}
   - component: {fileID: 846779390}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Red Tank_0
   m_TagString: Tank
   m_Icon: {fileID: 0}
@@ -671,7 +671,7 @@ GameObject:
   - component: {fileID: 1415131302}
   - component: {fileID: 1415131305}
   - component: {fileID: 1415131304}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tilemap
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -5431,7 +5431,8 @@ GameObject:
   - component: {fileID: 2109130748}
   - component: {fileID: 2109130749}
   - component: {fileID: 2109130750}
-  m_Layer: 0
+  - component: {fileID: 2109130751}
+  m_Layer: 7
   m_Name: Blue Tank_0
   m_TagString: Tank
   m_Icon: {fileID: 0}
@@ -5690,7 +5691,20 @@ MonoBehaviour:
   maxReflections: 5
   wallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
+--- !u!114 &2109130751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109130740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89fed9102856cbe4fac0f65a196c9688, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserLine: {fileID: 1142037352413484334, guid: d5945722855bb684c8a9871988daf47f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
