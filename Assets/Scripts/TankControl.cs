@@ -18,6 +18,7 @@ public class TankControl : MonoBehaviour
     public Transform fireEffectPoint;
     public GameObject shotGunPrefab;
     public GameObject miniGunPrefab;
+    public GameObject beamPrefab;
     private float nextFireTime =0f;
     public int gunMode = 0;
     [Header("VFX")]
@@ -38,6 +39,7 @@ public class TankControl : MonoBehaviour
     private MiniGun miniGun;
     private LaserAim laserAim;
     private Laser laser;
+    private Beam beam;
 
     
     // private AudioSource audioSource;
@@ -108,6 +110,9 @@ public class TankControl : MonoBehaviour
                 gunMode = 0;
                 laserAim.setIsAiming(false);
                 break;
+            case 4: 
+                OnBeamGun();
+                break;
         }
 
     }
@@ -117,15 +122,15 @@ public class TankControl : MonoBehaviour
             laserAim.setFirePoint(firePoint);
             laserAim.setIsAiming(true);
         }
-        if(gunMode==0 && nextFireTime < Time.time){
-            gunMode = 3;
-        }
         Vector2 finalMoveInput = Vector2.zero;
         if (is_created == true)
         {
             speed = tank.speed;
             rotationSpeed = tank.rotationSpeed;
             PlayerID = tank.playerID;
+        }
+        if(beam != null){
+            beam.BeamUpdate();
         }
         
         if (inputConfig != null)
@@ -248,6 +253,15 @@ public class TankControl : MonoBehaviour
         Debug.Log("laserAim.getPts(): " + laserAim.getPts().Count);
         laser.setPts(laserAim.getPts());
         nextFireTime = Time.time + laser.fireRate;
+    }
+    private void OnBeamGun(){
+        GameObject beamvfx = Instantiate(beamPrefab,firePoint.position,firePoint.rotation);
+        beamvfx.transform.SetParent(firePoint);
+        beamvfx.transform.localPosition = Vector3.zero;
+        beamvfx.transform.localRotation = Quaternion.identity;
+        beam = beamvfx.GetComponent<Beam>();
+        beam.setFirePoint(firePoint);
+        gunMode = 0;
     }
     private Vector2 RotateVector(Vector2 vector, float angle)
     {
