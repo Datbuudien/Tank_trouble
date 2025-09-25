@@ -6101,6 +6101,7 @@ GameObject:
   - component: {fileID: 2109130749}
   - component: {fileID: 2109130750}
   - component: {fileID: 2109130751}
+  - component: {fileID: 2109130752}
   m_Layer: 7
   m_Name: Blue Tank_0
   m_TagString: Tank
@@ -6383,6 +6384,27 @@ MonoBehaviour:
   damage: 20
   hitEffect: {fileID: 653715333247105891, guid: 8125b6d78262e384ea92a276533ce474, type: 3}
   collisionAudio: {fileID: 3006143622826994207, guid: 6cc60c3b910270042814c529f3e946ae, type: 3}
+--- !u!114 &2109130752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109130740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324f2a3a3a7549d4098f098089c1305b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tankSprites:
+  - {fileID: 8389265745280615935, guid: 1d47184f0e066174c8de38f17f6c7533, type: 3}
+  - {fileID: 8389265745280615935, guid: c01f506b751dd7e41a76c495918e71d2, type: 3}
+  - {fileID: 8389265745280615935, guid: 4697d1b67ee9fa843a0efe3a132b5dfc, type: 3}
+  - {fileID: 8389265745280615935, guid: d6c54b58231d4f6488b36fff578d34c8, type: 3}
+  - {fileID: 8389265745280615935, guid: cf60bb47c7b4f3b46871a673c62b0d41, type: 3}
+  - {fileID: 7880590837630725365, guid: ba01e77ff9413e740909474f22e87932, type: 3}
+  - {fileID: -5311606320350768411, guid: 956bf6c8fe0b3844c923460ec6c1bc66, type: 3}
+  - {fileID: 9137085770714129595, guid: 479ac31a49484a541b97ddccddb08e8a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -40,6 +40,8 @@ public class TankControl : MonoBehaviour
     private LaserAim laserAim;
     private Laser laser;
     private Beam beam;
+    private float startBeamTime = 0f;
+    private TankImageController tankImageController;
 
     
     // private AudioSource audioSource;
@@ -59,6 +61,7 @@ public class TankControl : MonoBehaviour
         miniGun = miniGunPrefab.GetComponent<MiniGun>();
         laserAim = GetComponent<LaserAim>();
         laser = GetComponent<Laser>();
+        tankImageController = GetComponent<TankImageController>();
     }
     private void Start()
     {
@@ -118,9 +121,24 @@ public class TankControl : MonoBehaviour
     }
     void Update()
     {   
-        if(gunMode == 3){
+        if(gunMode == 0) tankImageController.setTankSprite(gunMode);
+        else if(gunMode == 1) tankImageController.setTankSprite(gunMode);
+        else if(gunMode == 2) tankImageController.setTankSprite(gunMode);
+        else if(gunMode == 3){
+            tankImageController.setTankSprite(gunMode);
             laserAim.setFirePoint(firePoint);
             laserAim.setIsAiming(true);
+        }
+        if(beam != null){
+            beam.BeamUpdate();
+            if(Time.time - startBeamTime > 1f && Time.time - startBeamTime < 2f) tankImageController.setTankSprite(5);
+            else if(Time.time - startBeamTime > 2f && Time.time - startBeamTime < 3f) tankImageController.setTankSprite(6);
+            else if(Time.time - startBeamTime > 3f && Time.time - startBeamTime < beam.lifetime) tankImageController.setTankSprite(7);
+            else if(Time.time - startBeamTime > beam.lifetime) 
+            {
+                beam = null;
+                gunMode = 0;
+            }
         }
         Vector2 finalMoveInput = Vector2.zero;
         if (is_created == true)
@@ -129,10 +147,6 @@ public class TankControl : MonoBehaviour
             rotationSpeed = tank.rotationSpeed;
             PlayerID = tank.playerID;
         }
-        if(beam != null){
-            beam.BeamUpdate();
-        }
-        
         if (inputConfig != null)
         {
             InputConfig.PlayerInput currentInput = null;
@@ -180,7 +194,7 @@ public class TankControl : MonoBehaviour
     }
     private void OnNormalGun(){
         if (Time.time < nextFireTime) return;
-        if (currentBullets >= bullets.maxBullets) return;    
+        if (currentBullets >= bullets.maxBullets) return;
         if (bulletPrefab != null && firePoint != null)
         {
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
@@ -261,7 +275,9 @@ public class TankControl : MonoBehaviour
         beamvfx.transform.localRotation = Quaternion.identity;
         beam = beamvfx.GetComponent<Beam>();
         beam.setFirePoint(firePoint);
-        gunMode = 0;
+        nextFireTime = Time.time + beam.fireRate;
+        Destroy(beamvfx,beam.lifetime);
+        startBeamTime = Time.time;
     }
     private Vector2 RotateVector(Vector2 vector, float angle)
     {
