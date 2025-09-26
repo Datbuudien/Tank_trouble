@@ -5,5 +5,5 @@ public class ShotGun : Bullet
 
     public int shotGunBullets = 5;
     public float spreadAngle = 30f;
-    
+    public int maxShotGunBullets = 50;
 }

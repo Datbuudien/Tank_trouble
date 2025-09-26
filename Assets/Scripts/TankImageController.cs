@@ -8,7 +8,6 @@ public class TankImageController : MonoBehaviour
         tankRenderer = GetComponent<SpriteRenderer>();
     }
     public void setTankSprite(int gunMode){
-        Debug.Log("setTankSprite: " + gunMode);
         tankRenderer.sprite = tankSprites[gunMode];
     }
 }

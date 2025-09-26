@@ -42,10 +42,21 @@ public class TankControl : MonoBehaviour
     private Beam beam;
     private float startBeamTime = 0f;
     private TankImageController tankImageController;
+    private bool isBeamActive = false;
+    //Set Mode false=> inactive sprite tank
+    private bool isSetModeNormalGun = false;
+    private bool isSetModeShotGun= false;
+    private bool isSetModeMiniGun = false;
+    private bool isSetModeLaserGun = false; 
+    private bool isSetModeBeamGun = false; 
+    // Count shotgun bullets, minigun bullets and normal bullets
+    private int currentBullets =0;
+    private int currentShotGunBullets = 0;
+    private int currentMiniGunBullets = 0;
 
     
     // private AudioSource audioSource;
-    private int currentBullets =0;
+    
     private void Awake(){
         // audioSource = GetComponent<AudioSource>(); // dùng cho nếu chỉ có 1 audio source
         if(audioSource == null){
@@ -88,7 +99,8 @@ public class TankControl : MonoBehaviour
 
     // private void OnEnable() 
     // { 
-    //     if (controls != null && PlayerID == 1) controls.Enable(); 
+    //     // if (controls != null && PlayerID == 1) controls.Enable(); 
+    //     if(beam != null) beam.BeamUpdate();
     // }
     
     private void OnDisable() 
@@ -97,6 +109,7 @@ public class TankControl : MonoBehaviour
     }
     private void OnAttack()
     {
+        Debug.Log("gunMode: " + gunMode);
         switch (gunMode)
         {
             case 0:
@@ -111,7 +124,9 @@ public class TankControl : MonoBehaviour
             case 3:
                 OnLaserGun();
                 gunMode = 0;
+                isSetModeNormalGun = false;
                 laserAim.setIsAiming(false);
+                isSetModeLaserGun = false;
                 break;
             case 4: 
                 OnBeamGun();
@@ -121,24 +136,19 @@ public class TankControl : MonoBehaviour
     }
     void Update()
     {   
-        if(gunMode == 0) tankImageController.setTankSprite(gunMode);
-        else if(gunMode == 1) tankImageController.setTankSprite(gunMode);
-        else if(gunMode == 2) tankImageController.setTankSprite(gunMode);
-        else if(gunMode == 3){
+        if(gunMode == 0 && !isSetModeNormalGun) {tankImageController.setTankSprite(gunMode); isSetModeNormalGun = true;}
+        else if(gunMode == 1 && !isSetModeShotGun) {tankImageController.setTankSprite(gunMode); isSetModeShotGun = true;}
+        else if(gunMode == 2 && !isSetModeMiniGun) {tankImageController.setTankSprite(gunMode); isSetModeMiniGun = true;}
+        else if(gunMode == 3 && !isSetModeLaserGun) {
+            tankImageController.setTankSprite(gunMode);
+            isSetModeLaserGun = true;
             tankImageController.setTankSprite(gunMode);
             laserAim.setFirePoint(firePoint);
             laserAim.setIsAiming(true);
         }
-        if(beam != null){
-            beam.BeamUpdate();
-            if(Time.time - startBeamTime > 1f && Time.time - startBeamTime < 2f) tankImageController.setTankSprite(5);
-            else if(Time.time - startBeamTime > 2f && Time.time - startBeamTime < 3f) tankImageController.setTankSprite(6);
-            else if(Time.time - startBeamTime > 3f && Time.time - startBeamTime < beam.lifetime) tankImageController.setTankSprite(7);
-            else if(Time.time - startBeamTime > beam.lifetime) 
-            {
-                beam = null;
-                gunMode = 0;
-            }
+        else if(gunMode == 4 && !isSetModeBeamGun){
+            isSetModeBeamGun = true;
+            tankImageController.setTankSprite(4);   
         }
         Vector2 finalMoveInput = Vector2.zero;
         if (is_created == true)
@@ -146,6 +156,33 @@ public class TankControl : MonoBehaviour
             speed = tank.speed;
             rotationSpeed = tank.rotationSpeed;
             PlayerID = tank.playerID;
+        }
+        if(beam != null){
+            beam.BeamUpdate();
+        }
+        if(isBeamActive){
+            if(Time.time - startBeamTime <= 0.5f ) tankImageController.setTankSprite(5);
+            else if(Time.time - startBeamTime >0.5f && Time.time - startBeamTime <= 1f) tankImageController.setTankSprite(6);
+            else if (Time.time - startBeamTime > 1f && Time.time - startBeamTime <= 5.5f) {
+                tankImageController.setTankSprite(7);
+                if(beam == null)
+                {
+                GameObject beamvfx = Instantiate(beamPrefab,firePoint.position,firePoint.rotation);
+                beam = beamvfx.GetComponent<Beam>();
+                beamvfx.transform.SetParent(firePoint);
+                beamvfx.transform.localPosition = Vector3.zero;
+                beamvfx.transform.localRotation = Quaternion.identity;
+                beam.setFirePoint(firePoint);
+                Destroy(beamvfx,4.5f);
+                }
+            }
+            else if(Time.time - startBeamTime > 6f)
+            {
+                gunMode = 0;
+                isSetModeBeamGun = false;
+                isSetModeNormalGun = false;
+                isBeamActive = false;
+            }
         }
         if (inputConfig != null)
         {
@@ -241,6 +278,14 @@ public class TankControl : MonoBehaviour
             Destroy(vfx,0.15f);
         }
         nextFireTime = Time.time + shotGun.fireRate;
+        currentShotGunBullets += shotGun.shotGunBullets;
+        if(currentShotGunBullets == shotGun.maxShotGunBullets){
+            currentShotGunBullets =0;
+            gunMode = 0;
+            isSetModeShotGun = false;
+            isSetModeNormalGun = false;
+            nextFireTime = Time.time + bullets.fireRate;
+        }
     }
     private void OnMiniGun()
     {   if (Time.time < nextFireTime) return;
@@ -259,6 +304,14 @@ public class TankControl : MonoBehaviour
         Destroy(vfx,0.15f);
         AudioManager.Play2DOneShot(miniFire.clip,miniFire.volume);
         nextFireTime = Time.time + miniGun.fireRate;
+        currentMiniGunBullets += miniGun.miniGunBullets;
+        if(currentMiniGunBullets == miniGun.maxMiniGunBullets){
+            currentMiniGunBullets = 0;
+            gunMode = 0;
+            isSetModeMiniGun = false;
+            isSetModeNormalGun = false;
+            nextFireTime = Time.time + bullets.fireRate;
+        }
     }
     private void OnLaserGun(){
 
@@ -269,15 +322,16 @@ public class TankControl : MonoBehaviour
         nextFireTime = Time.time + laser.fireRate;
     }
     private void OnBeamGun(){
-        GameObject beamvfx = Instantiate(beamPrefab,firePoint.position,firePoint.rotation);
-        beamvfx.transform.SetParent(firePoint);
-        beamvfx.transform.localPosition = Vector3.zero;
-        beamvfx.transform.localRotation = Quaternion.identity;
-        beam = beamvfx.GetComponent<Beam>();
-        beam.setFirePoint(firePoint);
-        nextFireTime = Time.time + beam.fireRate;
-        Destroy(beamvfx,beam.lifetime);
+        // GameObject beamvfx = Instantiate(beamPrefab,firePoint.position,firePoint.rotation);
+        // beamvfx.transform.SetParent(firePoint);
+        // beamvfx.transform.localPosition = Vector3.zero;
+        // beamvfx.transform.localRotation = Quaternion.identity;
+        // beam = beamvfx.GetComponent<Beam>();
+        // beam.setFirePoint(firePoint);     
+        // Destroy(beamvfx,beam.lifetime);
+        nextFireTime = Time.time + Beam.fireRate;
         startBeamTime = Time.time;
+        isBeamActive = true;
     }
     private Vector2 RotateVector(Vector2 vector, float angle)
     {

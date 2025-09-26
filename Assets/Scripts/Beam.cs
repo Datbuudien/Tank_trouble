@@ -4,10 +4,11 @@ public class Beam : MonoBehaviour
 {
     [Header("Beam Properties")]
     public float damage = 0.00000001f;
-    public float lifetime = 5f;
-    public float timeDuration = 1f;
+
+    public float timeDuration = 5f;
+    public static float lifetime = 12f;
     public LayerMask tankLayer;
-    public float fireRate = 0.5f;
+    public static float fireRate = 7f;
     public static float beamLength = 50f;
     public static float beamWidth = 0.7f;
     // private float offset = 25f;

@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 154227985}
   - component: {fileID: 154227984}
   - component: {fileID: 154227983}
+  - component: {fileID: 154227993}
   m_Layer: 7
   m_Name: Orange Tank
   m_TagString: Tank
@@ -371,6 +372,27 @@ Transform:
   - {fileID: 715648223}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &154227993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154227982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324f2a3a3a7549d4098f098089c1305b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tankSprites:
+  - {fileID: 6233598441412493810, guid: 7901cfc1b29992e4faa2c0562b91c765, type: 3}
+  - {fileID: 6233598441412493810, guid: 8480e9884edfea44da539262d6a3bee8, type: 3}
+  - {fileID: 6233598441412493810, guid: 8954d46596ebd1341938efeff6dc65eb, type: 3}
+  - {fileID: 6233598441412493810, guid: ead8892942bad144bb2c424602614f08, type: 3}
+  - {fileID: 6233598441412493810, guid: 7d2ecc9d140ab7240985a7ea562d4278, type: 3}
+  - {fileID: -1335303567307270042, guid: c28207998ba2f5a40b5fc6b6fdd45240, type: 3}
+  - {fileID: -4186945983416315610, guid: bcc4a0b12e183dd42992d8ce8100081b, type: 3}
+  - {fileID: 604626858219802565, guid: 4ce10e3e2f6bdaa48939a55017be3dc4, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,6 +706,7 @@ GameObject:
   - component: {fileID: 846779390}
   - component: {fileID: 846779392}
   - component: {fileID: 846779391}
+  - component: {fileID: 846779393}
   m_Layer: 7
   m_Name: Red Tank_0
   m_TagString: Tank
@@ -755,7 +778,7 @@ Transform:
   m_GameObject: {fileID: 846779384}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -25.57, y: 7.78, z: 0}
+  m_LocalPosition: {x: -25.97, y: 7.91, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -920,6 +943,27 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &846779393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846779384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324f2a3a3a7549d4098f098089c1305b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tankSprites:
+  - {fileID: -4667408384459538777, guid: 1ef232ee4d52b284e9b11eac7f483b8d, type: 3}
+  - {fileID: -4667408384459538777, guid: 29cdf7d956291c94195b0fa81ac55cb3, type: 3}
+  - {fileID: -4667408384459538777, guid: e2c0f67d0c5be914ca28d8d9c259ed2a, type: 3}
+  - {fileID: -4667408384459538777, guid: 653c88fed40813247a6a23d313acf566, type: 3}
+  - {fileID: -4667408384459538777, guid: 87f88c43f6be38e488771b39705f32a5, type: 3}
+  - {fileID: -7737930248500000189, guid: eaa8ac3ff041e7f49b8736c6576d6129, type: 3}
+  - {fileID: -1828239720735232855, guid: b452d2130115bbf4d907c936b8f3d84d, type: 3}
+  - {fileID: -7257835993716893137, guid: 798e783ff3cb5624781a94b2598b639d, type: 3}
 --- !u!1 &1097474263
 GameObject:
   m_ObjectHideFlags: 0
@@ -5754,6 +5798,7 @@ GameObject:
   - component: {fileID: 1517123156}
   - component: {fileID: 1517123155}
   - component: {fileID: 1517123154}
+  - component: {fileID: 1517123164}
   m_Layer: 7
   m_Name: GreenTank
   m_TagString: Tank
@@ -5990,6 +6035,27 @@ Transform:
   - {fileID: 1509413176}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1517123164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517123153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324f2a3a3a7549d4098f098089c1305b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tankSprites:
+  - {fileID: -7605302930631496738, guid: df039a4d55b9f16438498e19ed88e1a6, type: 3}
+  - {fileID: -7605302930631496738, guid: 5591537345b0704479c51282adff0753, type: 3}
+  - {fileID: -7605302930631496738, guid: 3fb0f7a343ae99b4b9731a9fa6b32967, type: 3}
+  - {fileID: -7605302930631496738, guid: 2e1a634d07f8d30419a5ad2d2ace56f0, type: 3}
+  - {fileID: -7605302930631496738, guid: b15f9ae2b8b79b2419d317ad30825cf0, type: 3}
+  - {fileID: -2145641742486878573, guid: 9668059ee9010e540b4f73db975e1cb4, type: 3}
+  - {fileID: -1118826183335460639, guid: 3809bf490c917384f88be26bf88e9859, type: 3}
+  - {fileID: -1732650408907383324, guid: 33b9fb7fcd0d9c74db4185eba0893ba9, type: 3}
 --- !u!1 &1753811329
 GameObject:
   m_ObjectHideFlags: 0
@@ -6188,7 +6254,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2109130740}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
