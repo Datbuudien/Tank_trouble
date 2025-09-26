@@ -30,10 +30,14 @@ public class TankControl : MonoBehaviour
     public GameObject audioShotGun;
     public GameObject audioMiniGun;
     public GameObject audioLaser;
+    public GameObject audioBeamStart;
+    public GameObject audioBeamActive;
     private AudioSource fire;
     private AudioSource shotFire;
     private AudioSource miniFire;
     private AudioSource laserFire;
+    private AudioSource beamStart;
+    private AudioSource beamActive;
     private Bullet bullets;
     private ShotGun shotGun;
     private MiniGun miniGun;
@@ -67,6 +71,8 @@ public class TankControl : MonoBehaviour
         shotFire = audioShotGun.GetComponent<AudioSource>();
         miniFire = audioMiniGun.GetComponent<AudioSource>();
         laserFire = audioLaser.GetComponent<AudioSource>();
+        beamStart = audioBeamStart.GetComponent<AudioSource>();
+        beamActive = audioBeamActive.GetComponent<AudioSource>();
         bullets = bulletPrefab.GetComponent<Bullet>();
         shotGun = shotGunPrefab.GetComponent<ShotGun>();
         miniGun = miniGunPrefab.GetComponent<MiniGun>();
@@ -168,6 +174,7 @@ public class TankControl : MonoBehaviour
                 if(beam == null)
                 {
                 GameObject beamvfx = Instantiate(beamPrefab,firePoint.position,firePoint.rotation);
+                AudioManager.Play2DLoop(beamActive.clip,beamActive.volume,4.5f);
                 beam = beamvfx.GetComponent<Beam>();
                 beamvfx.transform.SetParent(firePoint);
                 beamvfx.transform.localPosition = Vector3.zero;
@@ -322,6 +329,7 @@ public class TankControl : MonoBehaviour
         nextFireTime = Time.time + laser.fireRate;
     }
     private void OnBeamGun(){
+        if(Time.time < nextFireTime) return;
         // GameObject beamvfx = Instantiate(beamPrefab,firePoint.position,firePoint.rotation);
         // beamvfx.transform.SetParent(firePoint);
         // beamvfx.transform.localPosition = Vector3.zero;
@@ -332,6 +340,7 @@ public class TankControl : MonoBehaviour
         nextFireTime = Time.time + Beam.fireRate;
         startBeamTime = Time.time;
         isBeamActive = true;
+        AudioManager.Play2DOneShot(beamStart.clip,beamStart.volume);
     }
     private Vector2 RotateVector(Vector2 vector, float angle)
     {

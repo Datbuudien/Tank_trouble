@@ -18,5 +18,18 @@ public class AudioManager
         src.Play();
         Object.Destroy(go, clip.length);
     }
-    
+    public static void Play2DLoop(AudioClip clip, float volume,float loopDuration){
+        if(clip == null){
+            Debug.LogError("Clip is null");
+        }
+        GameObject go = new GameObject("Loop2DAudio");
+        AudioSource src = go.AddComponent<AudioSource>();
+        src.playOnAwake = false;
+        src.spatialBlend = 0f;
+        src.clip = clip;
+        src.volume = volume;
+        src.loop = true;
+        src.Play();
+        Object.Destroy(go, loopDuration);
+    }
 }

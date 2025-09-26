@@ -8,7 +8,7 @@ public class Beam : MonoBehaviour
     public float timeDuration = 5f;
     public static float lifetime = 12f;
     public LayerMask tankLayer;
-    public static float fireRate = 7f;
+    public static float fireRate = 10f;
     public static float beamLength = 50f;
     public static float beamWidth = 0.7f;
     // private float offset = 25f;

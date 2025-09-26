@@ -206,6 +206,8 @@ MonoBehaviour:
   audioShotGun: {fileID: 8643588052115119926, guid: 81565ed014507bc44bc2a48bdfa0a1eb, type: 3}
   audioMiniGun: {fileID: 2910976334822137808, guid: 70999dd674989ce4d951c1054c603385, type: 3}
   audioLaser: {fileID: 428662883879684277, guid: 4952b099b2022c341b91db93af525037, type: 3}
+  audioBeamStart: {fileID: 1614857748523729636, guid: 2d4bcca9cee0ef6498d4fccd33880ba9, type: 3}
+  audioBeamActive: {fileID: 4070256588389326085, guid: f0695413fc0940a48bc947b15d6cd324, type: 3}
 --- !u!114 &154227986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -858,6 +860,8 @@ MonoBehaviour:
   audioShotGun: {fileID: 8643588052115119926, guid: 81565ed014507bc44bc2a48bdfa0a1eb, type: 3}
   audioMiniGun: {fileID: 2910976334822137808, guid: 70999dd674989ce4d951c1054c603385, type: 3}
   audioLaser: {fileID: 428662883879684277, guid: 4952b099b2022c341b91db93af525037, type: 3}
+  audioBeamStart: {fileID: 1614857748523729636, guid: 2d4bcca9cee0ef6498d4fccd33880ba9, type: 3}
+  audioBeamActive: {fileID: 4070256588389326085, guid: f0695413fc0940a48bc947b15d6cd324, type: 3}
 --- !u!50 &846779389
 Rigidbody2D:
   serializedVersion: 5
@@ -5869,6 +5873,8 @@ MonoBehaviour:
   audioShotGun: {fileID: 8643588052115119926, guid: 81565ed014507bc44bc2a48bdfa0a1eb, type: 3}
   audioMiniGun: {fileID: 2910976334822137808, guid: 70999dd674989ce4d951c1054c603385, type: 3}
   audioLaser: {fileID: 428662883879684277, guid: 4952b099b2022c341b91db93af525037, type: 3}
+  audioBeamStart: {fileID: 1614857748523729636, guid: 2d4bcca9cee0ef6498d4fccd33880ba9, type: 3}
+  audioBeamActive: {fileID: 4070256588389326085, guid: f0695413fc0940a48bc947b15d6cd324, type: 3}
 --- !u!114 &1517123157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6413,6 +6419,8 @@ MonoBehaviour:
   audioShotGun: {fileID: 8643588052115119926, guid: 81565ed014507bc44bc2a48bdfa0a1eb, type: 3}
   audioMiniGun: {fileID: 2910976334822137808, guid: 70999dd674989ce4d951c1054c603385, type: 3}
   audioLaser: {fileID: 428662883879684277, guid: 4952b099b2022c341b91db93af525037, type: 3}
+  audioBeamStart: {fileID: 1614857748523729636, guid: 2d4bcca9cee0ef6498d4fccd33880ba9, type: 3}
+  audioBeamActive: {fileID: 4070256588389326085, guid: f0695413fc0940a48bc947b15d6cd324, type: 3}
 --- !u!114 &2109130750
 MonoBehaviour:
   m_ObjectHideFlags: 0
