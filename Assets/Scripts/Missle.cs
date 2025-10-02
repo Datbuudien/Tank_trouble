@@ -4,12 +4,12 @@ public class Missle : MonoBehaviour
 {
     [Header("Missle Properties")]
     public float speed = 3f;
-    public Transform target; 
+    public List<Transform> targets; 
     public ScanMap scanMap;
     private List<Vector2Int> path;
     private int pathIndex; 
     private Vector2Int lastGoal;
-    private float repathCooldown = 0.1f; 
+    private float repathCooldown = 2f; 
     private float lastRepathTime;
     private Vector2Int start; 
     private Vector2Int goal;
@@ -19,22 +19,38 @@ public class Missle : MonoBehaviour
     private float angle;
     private float rotationSpeed = 270f;
     Quaternion targetRotation;
+    private int targetIndex=-1;
+    private float minDistance;
+    private float distance;
+    private ParticleSystem ps;
     void Start(){
         path = new List<Vector2Int>();
         pathIndex = 0;
         lastGoal = new Vector2Int(int.MinValue,int.MinValue);
         lastRepathTime = -repathCooldown;
         pf = new Pathfinding(scanMap.walkable);
+        ps = GetComponentInChildren<ParticleSystem>();
     }
     void Update(){
-        if(scanMap == null || target == null) return;
-        goal = scanMap.WorldToGrid(target.position);
-        if(goal != lastGoal && Time.time - lastRepathTime > repathCooldown){
+        if(Time.time - lastRepathTime > repathCooldown){
+            minDistance = float.MaxValue;
+            for(int i=0;i<targets.Count;i++){
+                distance = Vector3.Distance(transform.position,targets[i].position);
+                if(distance <minDistance){
+                    minDistance = distance;
+                    targetIndex = i;
+                }
+            }
+            lastRepathTime = Time.time;
+            ChangeColor(targets[targetIndex]);
+        }
+        if(scanMap == null || targetIndex == -1) return;
+        goal = scanMap.WorldToGrid(targets[targetIndex].position);
+        if(goal != lastGoal){
             start = scanMap.WorldToGrid(transform.position);
             path = pf.FindPath(start,goal);
             pathIndex = 1;
             lastGoal = goal;
-            lastRepathTime = Time.time;
         }
         FollowPath();
     }
@@ -51,6 +67,13 @@ public class Missle : MonoBehaviour
         if(Vector3.Distance(transform.position,targetWorld) <0.1f){
             transform.position = targetWorld;
             pathIndex++;
+        }
+    }
+    void ChangeColor(Transform target){
+        Tank t = target.GetComponent<Tank>();
+        if(t!=null){
+            var main = ps.main;
+            main.startColor = t.GetColor();
         }
     }
 }
